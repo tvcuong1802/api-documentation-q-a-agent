@@ -1,0 +1,55 @@
+{
+  "_provenance": {
+    "status": "PLACEHOLDER — NOT APPROVED FOR END USERS",
+    "why": "This template retrieves from a documentation corpus and shipped with none, so every query returned the bilingual no-match. A placeholder makes the retrieval path exercisable while the real corpus is sourced.",
+    "source": "Written by the template developer from public REST conventions. No vendor documentation was copied, and no organisation has reviewed or approved these entries.",
+    "kb_version": "0.0.1-placeholder",
+    "approved_by": null,
+    "created": "2026-09-03",
+    "replace_before_release": "Load the real API documentation before this agent answers for end users. An answer drawn from these entries is an answer nobody stands behind."
+  },
+  "documents": [
+    {
+      "id": "records-list",
+      "endpoint": "/v1/records",
+      "method": "GET",
+      "title": "List records",
+      "text": "Returns a page of records for an app. Pass `app` to select the app and `query` to filter. Paging uses `limit` (default 100, maximum 500) and `offset`. The response carries `records` and `totalCount`. To read more than 500, page with `offset` until fewer than `limit` come back."
+    },
+    {
+      "id": "records-get",
+      "endpoint": "/v1/record",
+      "method": "GET",
+      "title": "Get a single record",
+      "text": "Returns one record by `app` and `id`. Responds 404 when the record does not exist or the caller cannot see it; the two are deliberately indistinguishable so existence is not leaked."
+    },
+    {
+      "id": "records-post",
+      "endpoint": "/v1/record",
+      "method": "POST",
+      "title": "Create a record",
+      "text": "Creates one record in `app` from the `record` object. Field keys are the app's field codes, not display names. Returns the new `id` and `revision`. Validation errors respond 400 with a per-field message."
+    },
+    {
+      "id": "records-bulk",
+      "endpoint": "/v1/records",
+      "method": "POST",
+      "title": "Create records in bulk",
+      "text": "Creates up to 100 records in one call. The whole request is rejected if any row fails validation, so partial writes cannot happen. For more than 100, send several calls and treat each as its own unit."
+    },
+    {
+      "id": "auth",
+      "endpoint": "/v1/auth",
+      "method": "HEADER",
+      "title": "Authentication",
+      "text": "Send an API token in the `X-Api-Token` header. Tokens are scoped per app and per permission; a token without write permission responds 403 on POST even when it can read the same app."
+    },
+    {
+      "id": "rate-limits",
+      "endpoint": "/v1/*",
+      "method": "ANY",
+      "title": "Rate limits",
+      "text": "Requests are limited per app. Exceeding the limit responds 429 with `Retry-After` in seconds. Retry after that interval; retrying sooner extends the window."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# config/config.yaml — CMN-C1-053 (new-gen runtime config)
+# Loaded once by src/graph/graph.py:_load_app_config() and injected into the
+# slot orchestrators' constructors (the backbone __call__ does not thread config
+# to execute()). The whole dict is passed as each config-taking sub-node's config=.
+
+# S-2 input sanitization (InputValidateNode)
+security:
+  max_query_length: 2000
+  url_liveness_check: false   # UrlCheckNode is opt-in; default off (no outbound calls)
+
+# Bilingual vocabulary for QueryNormalizeNode
+vocab_path: "config/bilingual_vocab.json"
+
+# Generation (ResponseGenerateNode)
+include_code_examples: true
+# system_prompt: omitted → node default (API-documentation assistant prompt)
